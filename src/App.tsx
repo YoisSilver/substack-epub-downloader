@@ -1,6 +1,7 @@
 import { invoke } from "@tauri-apps/api/core";
 import { open } from "@tauri-apps/plugin-dialog";
 import { ChangeEvent, useEffect, useMemo, useState } from "react";
+import GbaScene from "./GbaScene";
 import type {
   CoverMode,
   Format,
@@ -334,11 +335,14 @@ export default function App() {
   }
 
   return (
-    <main className="app-shell">
-      <header className="header">
-        <h1>Substack Downloader</h1>
-        <p>Desktop EPUB/TXT exporter for public Substack posts.</p>
-      </header>
+    <div className="game-shell">
+      <GbaScene />
+      <div className="scanline-layer" />
+      <main className="app-shell">
+        <header className="header">
+          <h1>Substack Downloader</h1>
+          <p>Desktop EPUB/TXT exporter for public Substack posts.</p>
+        </header>
 
       <section className="panel">
         <div className="row">
@@ -573,50 +577,51 @@ export default function App() {
         </article>
       </section>
 
-      {errorText && (
-        <section className="panel error">
-          <strong>Error</strong>
-          <p>{errorText}</p>
-        </section>
-      )}
+        {errorText && (
+          <section className="panel error">
+            <strong>Error</strong>
+            <p>{errorText}</p>
+          </section>
+        )}
 
-      {result && (
-        <section className="panel result">
-          <h3>Export Result</h3>
-          <p>Successful posts: {result.succeeded.length}</p>
-          <p>Failed posts: {result.failed.length}</p>
-          <p>Output files: {result.outputFiles.length}</p>
-          {result.outputFiles.length > 0 && (
-            <ul>
-              {result.outputFiles.map((file) => (
-                <li key={file}>{file}</li>
-              ))}
-            </ul>
-          )}
-          {result.failed.length > 0 && (
-            <>
-              <h4>Failures</h4>
+        {result && (
+          <section className="panel result">
+            <h3>Export Result</h3>
+            <p>Successful posts: {result.succeeded.length}</p>
+            <p>Failed posts: {result.failed.length}</p>
+            <p>Output files: {result.outputFiles.length}</p>
+            {result.outputFiles.length > 0 && (
               <ul>
-                {result.failed.map((failure) => (
-                  <li key={failure.postId}>
-                    {failure.postId}: {failure.reason}
-                  </li>
+                {result.outputFiles.map((file) => (
+                  <li key={file}>{file}</li>
                 ))}
               </ul>
-            </>
-          )}
-          {result.warnings.length > 0 && (
-            <>
-              <h4>Warnings</h4>
-              <ul>
-                {result.warnings.map((warning) => (
-                  <li key={warning}>{warning}</li>
-                ))}
-              </ul>
-            </>
-          )}
-        </section>
-      )}
-    </main>
+            )}
+            {result.failed.length > 0 && (
+              <>
+                <h4>Failures</h4>
+                <ul>
+                  {result.failed.map((failure) => (
+                    <li key={failure.postId}>
+                      {failure.postId}: {failure.reason}
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+            {result.warnings.length > 0 && (
+              <>
+                <h4>Warnings</h4>
+                <ul>
+                  {result.warnings.map((warning) => (
+                    <li key={warning}>{warning}</li>
+                  ))}
+                </ul>
+              </>
+            )}
+          </section>
+        )}
+      </main>
+    </div>
   );
 }

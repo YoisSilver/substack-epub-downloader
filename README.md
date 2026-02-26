@@ -1,56 +1,32 @@
-# Substack Downloader (Tauri Desktop EXE)
+# Substack EPUB Downloader
 
-Desktop GUI app for downloading public Substack posts and exporting them as EPUB and TXT.
+## Run From Releases (No Commands Needed)
 
-## Structure
+1. Open the GitHub **Releases** page for this repo.
+2. Download `substack-downloader.exe`.
+3. Run the EXE.
 
-- `src/`: editable React + TypeScript frontend source.
-- `dist/`: built frontend assets used by Tauri at runtime.
-- `src-tauri/`: Rust backend + Tauri app shell.
+That is all end users need.
 
-## End users
+## Features
 
-End users only need the released `.exe`. No commands are required.
+- Desktop EXE app (Tauri).
+- Download public Substack publications.
+- Export formats: `EPUB`, `TXT`.
+- Modes:
+  - Entire profile (date sorted)
+  - Specific post selection
+- Final reorder step for selected posts (number rank + up/down).
+- Combined export or per-post export.
+- EPUB cover options:
+  - Use Substack author/publication cover
+  - Upload custom cover
+- Footnote handling for EPUB output.
+- Animated game-style UI with Three.js background.
 
-## Development
-
-Prerequisites:
-- Node.js 18+
-- Rust stable toolchain
-- Visual Studio Build Tools (Windows)
-
-Install dependencies:
+## Development (Optional)
 
 ```powershell
 npm install
-```
-
-Run desktop app in dev mode:
-
-```powershell
 npm run tauri dev
 ```
-
-Build frontend only:
-
-```powershell
-npm run build
-```
-
-Build release EXE:
-
-```powershell
-npm run tauri build
-```
-
-Or (if `dist/` is already up to date):
-
-```powershell
-cd src-tauri
-cargo build --release
-```
-
-## Notes
-
-- Public Substack posts only.
-- PDF export is not included.
