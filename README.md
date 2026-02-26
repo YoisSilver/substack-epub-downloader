@@ -1,63 +1,56 @@
-# Substack Downloader (Desktop EXE)
+# Substack Downloader (Tauri Desktop EXE)
 
 Desktop GUI app for downloading public Substack posts and exporting them as EPUB and TXT.
 
-## What this repo is now
+## Structure
 
-- Desktop-only Tauri app.
-- No Vite/React build pipeline in this repo.
-- Frontend assets are prebuilt and stored in `dist/`.
-- Rust backend/source is in `src-tauri/`.
+- `src/`: editable React + TypeScript frontend source.
+- `dist/`: built frontend assets used by Tauri at runtime.
+- `src-tauri/`: Rust backend + Tauri app shell.
 
-## Features
+## End users
 
-- Load an entire Substack publication from URL.
-- Export modes:
-  - Entire profile (date sorted)
-  - Specific posts (manual reorder screen)
-- Output formats:
-  - EPUB
-  - TXT
-- Granularity:
-  - Per-post files
-  - Combined single file
-- EPUB cover options:
-  - Upload custom cover image
-  - Use Substack author/publication cover with generated title page text
-- Footnote extraction and linked in-EPUB footnotes.
+End users only need the released `.exe`. No commands are required.
 
-## Build the EXE
+## Development
 
 Prerequisites:
-- Rust toolchain (`rustup`, stable)
-- Visual Studio Build Tools on Windows (for native dependencies)
+- Node.js 18+
+- Rust stable toolchain
+- Visual Studio Build Tools (Windows)
 
-Command:
+Install dependencies:
+
+```powershell
+npm install
+```
+
+Run desktop app in dev mode:
+
+```powershell
+npm run tauri dev
+```
+
+Build frontend only:
+
+```powershell
+npm run build
+```
+
+Build release EXE:
+
+```powershell
+npm run tauri build
+```
+
+Or (if `dist/` is already up to date):
 
 ```powershell
 cd src-tauri
 cargo build --release
 ```
 
-Output:
-
-- EXE: `src-tauri/target/release/substack-downloader.exe`
-
-## Run from source
-
-```powershell
-cd src-tauri
-cargo run
-```
-
-## GitHub upload checklist
-
-1. Keep `dist/` committed (required for desktop UI at runtime).
-2. Do not commit `src-tauri/target/` or caches.
-3. Commit `src-tauri/Cargo.lock` for reproducible Rust builds.
-4. Create releases by attaching the built `.exe` from `src-tauri/target/release/`.
-
-## Scope
+## Notes
 
 - Public Substack posts only.
 - PDF export is not included.
